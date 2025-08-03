@@ -68,7 +68,7 @@ sum= sum+ users[i].age;}
 let avg=sum/3;
 console.log(avg);*/
 // Handle Errors - Try/Catch
-try{
+/*try{
     const jsonData = '{"name":"Alice","Age": 25}';
     const user = JSON.parse(jsonData);
     console.log("User data:",user.name);
@@ -82,4 +82,76 @@ catch(error){
     //The code that runs if an error occurs in the 'try' block
     console.error("An error occured! Details: ",error.message);
 }
-console.log("Program continues to run here");
+console.log("Program continues to run here");*/
+/*const fs = require('fs/promises');
+
+async function processNames(){
+    const inputFilePath = "names.txt";
+    const outputFilepath = "formatted_names.txt";
+
+    try{
+        console.log("Starting to process file...");
+
+        //Use await to read the file content as a single string
+        const fileContent = await fs.readFile(inputFilePath,'utf8');
+
+        //split the content by new lines to get an array of names
+        const names = fileContent.trim().split('\n');
+
+        console.log(`Read ${names.length} names.`);
+
+        //format each name bt trimming whitespace and converting to title case
+        const formatted_names = names.map(name=>{
+            const trimmedName = name.trim();
+            return trimmedName.charAt(0).toUpperCase() + trimmedName.slice(1).toLowerCase(); 
+        });
+        //create a new string with each name on a new line
+        const outputContent = formatted_names.join('\n');
+
+        //use await to write the formatted content to a new file
+        await fs.writeFile(outputFilepath,outputContent,'utf8');
+
+        console.log(`Successfully processed names  and saved to ${outputFilepath}`);
+    }catch(error){
+        console.error("An error is occured", error.message);
+    }
+}
+processNames();*/
+
+//The 'node-fetch' library is needed for Node.js.
+//You can install it with: npm install node-fetch@2
+const fetch = require('node-fetch');
+
+async function fetchPosts(){
+    console.log("Fetching posts from the API....");
+    const url = "https://jsonplaceholder.typicode.com/posts";
+
+    try{
+        //Use 'await' to wait for the network request to complete
+        const response = await fetch(url);
+    
+//Handle non-successful responses (e.g., a 404 Not found error)
+if(!response.ok){
+    throw new error(`HTTP error! Status: ${response.status}`);
+}
+
+//Use 'await' to wait for the response body to the parsed as JSON 
+const posts = await response.json();
+
+console.log("Successfully fetched posts!");
+//Log the titles of the first 5 posts 
+posts.slice(0, 5).forEach(post=>{
+    console.log(`-${post.title}`);
+});
+
+} catch(error){
+    //This will catch both network errors and the custom HTTP error we threw 
+    console.log("Failed to fetch posts:",error);
+}
+}
+fetchPosts();
+//Problems
+//What is the sum of the digits of the number 2^1000?
+//Can you use Array.reduce?
+
+
