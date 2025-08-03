@@ -67,8 +67,19 @@ for(let i=0;i<3;i++){
 sum= sum+ users[i].age;}
 let avg=sum/3;
 console.log(avg);*/
+// Handle Errors - Try/Catch
+try{
+    const jsonData = '{"name":"Alice","Age": 25}';
+    const user = JSON.parse(jsonData);
+    console.log("User data:",user.name);
 
-
-
-
-
+    const badJson = '{"name": "Bob"}';//This is missing a closing quote
+    // the next line will fail because the JSON is invalid.
+    const badUser = JSON.parse(badJson);
+    console.log("Bad User:",badUser.name);//This line is never reached 
+}
+catch(error){
+    //The code that runs if an error occurs in the 'try' block
+    console.error("An error occured! Details: ",error.message);
+}
+console.log("Program continues to run here");
